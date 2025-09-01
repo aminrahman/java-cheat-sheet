@@ -23,8 +23,8 @@
   - به جای این که از شی چیزی بپرسی و بعد تصمیم بگیری، تصمیم رو به خودش بسپار و ازش کاری که میخوای انجام بده رو بخواه.
     - یه مثال:
 
-</div>
 
+<div dir="ltr">
 
 ```
 if (car.getFuelLevel() > 0) {
@@ -34,8 +34,7 @@ if (car.getFuelLevel() > 0) {
 car.drive(); //Correct way
 ```
 
-
-<div dir="rtl">
+</div>
 
 - قانون SOLID (Single responsibility, Opne/Closed, Liskov substitution, Interface Segregation, Dependency Injection):
   - S: Single Responsibility  هر کلاس باید فقط یک وظیفه داشته باشد. مثال احراز هویت و ریپازیتوری در یک کلاس
