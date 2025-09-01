@@ -60,4 +60,108 @@ car.drive(); //Correct way
     - Indirection: ایجاد یک واسطه برای کاهش وابستگی سیستم. مثلا استفاده از سرویس یا اینترفیس بین Controller و Data Access
     - Protected Variations: نقاطی که ممکنه تغییر کنند رو با abstraction بپوشون. مثلا استفاده از اینترفیس برای لایه دیتابیس چون ممکنه نوع دیتابیس عوض بشه.
 
+
+## ORMها یا Object Relational Mapping
+- تبدیل خودکار بین اشیاء برنامه (Objects) و جداول پایگاه داده (Relational Table) را انجام می‌دهد.
+- یک ابزار یا به عبارتی یک کتابخانه است که کمک می‌کند به جای نوشتن مستقیم SQL خام، از طریق کلاس‌ها و اشیاء جاوا با دیتابیس کار کنیم.
+- معروف تریم ORM در جاوا Hibernate است.
+- JPA هم یک استاندارد جاوا برای ORM است و هایبرنیت به عبارتی یکی از پیاده سازی های JPA  است.
+- Spring Data JPA هم یک ابسترکت بالاتر روی JPA است و برای راحتی بیشتر است. کار راه راحت تر و امن تر کرده و قابلیت نگهداری را افزایش می دهد اما برای کوئری های پیچیده بهتر است از SQL استفاده شود.
+  - انواع کارکردها و نیازهاشون:
+  - برای CRUD ساده و معمولی: ORM عالیه
+    - برای پروژه های بزرگ و تیمی: ORM برای نگهداری بهتره
+    - در صورت نیاز به پرفورمنس بالا: SQL خام در برخی بخش‌های خاص بهتره
+    - برای گزارش‌گیری سنگین و پیچیده: SQL یا Stored Procedure مفید تره
+  	نمونه SP:
+
+<div dir="ltr">
+
+```
+@NamedStoredProcedureQuery(
+    name = "getEmployeesByDepartment",
+    procedureName = "GET_EMPLOYEES_BY_DEPT",
+    parameters = {
+        @StoredProcedureParameter(mode = ParameterMode.IN, name = "deptId", type = Integer.class)
+    },
+    resultClasses = Employee.class
+)
+@Entity
+public class Employee {
+    // ...
+}
+```
+
+</div>
+
+و سپس در کد:
+
+<div dir="ltr">
+
+```
+StoredProcedureQuery query = entityManager
+    .createNamedStoredProcedureQuery("getEmployeesByDepartment")
+    .setParameter("deptId", 10);
+List<Employee> employees = query.getResultList();
+```
+
+</div>
+
+
+- Annotationهای پایه در هایبرنیت برای نگاشت کلاس به جدول:
+  - @Entity: کلاس نماینده یک جدول است.
+  - @Table: نام جدول رو در دیتابیس مشخص میکند.
+  - @Id: مشخص کننده کلید اصلی یا همان Primary Key است.
+  - @GeneratedValue: نحوه تولید مقدار کلید اصلی را مشخص می‌کند.
+  - @Column: نام یک ستون خاص در جدول را مشخص میکند.
+  - Annotationهای پایه برای نگاشت روابط بین جداول (ارتباط بین کلاس‌ها):
+  - برای روابط یک به یک، یک به چند و چند به یک @JoinColumn که ستون کلید خارجی را مشخص میکند.
+    - برای روابط چند به چنتد @JoinTable که جدول واسط را مشخص میکند.
+- Annotationهای مربوط به ویژگی ستون‌ها:
+  - @Column مشخص می‌کند که یک فیلد به یک ستون در جدول پایگاه داده نگاشت شود. قابلیت تنظیم ویژگی‌هایی مثل name, nullable, length, unique و columnDefinition را دارد.
+
+<div dir="ltr">
+
+```
+@Column(name = "first_name", nullable = false, length = 50)
+private String firstName;
+```
+
+</div>
+
+  - @Temporal فقط برای فیلدهای نوع java.util.Date یا Calendar استفاده می‌شود. تعیین می‌کند که کدام بخش از زمان (تاریخ/ساعت/هر دو) در پایگاه داده ذخیره شود. مقادیر ممکن: TemporalType.DATE, TemporalType.TIME, TemporalType.TIMESTAMP.
+<div dir="ltr">
+
+```
+@Temporal(TemporalType.DATE)
+private Date birthDate;
+```
+
+</div>
+
+  - @Lob برای فیلدهایی با حجم بالا استفاده می‌شود (مثل متن‌های طولانی یا داده‌های باینری). متن بزرگ (CLOB) یا داده باینری بزرگ (BLOB) را مشخص می‌کند.
+<div dir="ltr">
+
+```
+@Lob
+private String longText;
+
+@Lob
+private byte[] imageData;
+```
+
+</div>
+
+  - @Transient این فیلد در پایگاه داده ذخیره نمی‌شود. برای داده‌هایی استفاده می‌شود که فقط در حافظه نگهداری می‌شوند (مثلاً برای محاسبات موقت). مشابه transient در جاوا ولی مخصوص JPA است.
+<div dir="ltr">
+
+```
+@Transient
+private String tempDisplayName;
+```
+
+</div>
+
+- نحوه کار به این صورته که زمانی که هایبرنیت شروع به کار میکنه، کلاس هایی که انوتیشن @Entity دارند رو شناسایی میکنه . براشون جدول معادل در دیتابیس ایجاد میکنه (در صورت استفاده از auto-schema-generator) اطلاعات موجود در جدول رو به شیء جاوا و برعکس نگاشت میکنه.
+مقایسه کلید اولیه یا Primary Key با کلید خارجی یا Foreign Key:
+
 </div>
