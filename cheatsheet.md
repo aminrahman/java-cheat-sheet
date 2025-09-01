@@ -1,6 +1,6 @@
 <div dir="rtl">
 
-اصول طراحی در مهندسی نرم افزار
+## اصول طراحی در مهندسی نرم افزار
 
 - قانون Kiss (Keep It Simple, Stuid):
   - کدت رو ساده نگه‌دار و زیاد پیچیدش نکن.
@@ -25,6 +25,7 @@
 
 </div>
 
+
 ```
 if (car.getFuelLevel() > 0) {
 	car.drive();
@@ -32,6 +33,7 @@ if (car.getFuelLevel() > 0) {
 
 car.drive(); //Correct way
 ```
+
 
 <div dir="rtl">
 
