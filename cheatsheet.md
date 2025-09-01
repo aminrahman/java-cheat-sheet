@@ -4,6 +4,7 @@
 
 - [Software Design Principals](#software-design-principals)
 - [ORM or Object Relational Mapping](#orm-or-object-relational-mapping)
+- [Authentication and Authorization](#authentication-and-authorization)
 - [Project Management in Software Engineering](#project-management-in-software-engineering)
 - [Scrum](#scrum)
 - [Docker](#docker)
@@ -204,7 +205,7 @@ private String tempDisplayName;
 | تعداد در جدول | فقط یکی                           | می تواند چندتا باشد        |
 |           وابستگی | مستقل است                       | به جدول دیگر وابسته است |
 
-##Authentication and Authorization
+## Authentication and Authorization
 
 
 |      مفاهیم |                                          Authentication |                                                  Authorization |
