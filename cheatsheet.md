@@ -1832,7 +1832,7 @@ public enum Singleton {
 | مناسب برای سیستم‌های توزیع‌شده | خیر                                           | برای ارتباط ساده و REST مناسب | عالی (Microservices, gRPC)                     | عالی (Big Data, Streaming)                                |
 | موارد استفاده متداول                    | سیستم‌های قدیمی جاوا           | REST API، وب‌سرویس‌ها                 | gRPC، میکروسرویس‌ها، موبایل   | Hadoop، Kafka، Big Data                                     |
 
-## Techniuqes for Resource Management and Cuncurrency in Java
+## Techniuqes for Resource Management and Concurrency in Java
 
 - Thread Pool و Executors
 
