@@ -38,6 +38,9 @@
   - [تکنیک های مدیریت منابع و Concurrency در جاوا](#techniques-for-resource-management-and-concurrency-in-java)
 - [زیرساخت و کارایی](#زیرساخت-و-کارایی)
   - [حافظه کش](#cache-memory)
+- [الگوهای طراحی](#الگوهای-طراحی)
+  - [الگوهای آفرینشی یا Creational](#الگوهای-آفرینشی-یا-creational)
+    - [الگوی Singleton](#الگوی-singleton)
 
 # مبانی نرم افزار و طراحی
 
@@ -1925,8 +1928,6 @@ public enum Singleton {
 
   - استفاده از برنامه‌نویسی reactive برای مدیریت بهتر جریان داده و منابع در محیط‌های همزمان و با نیاز به مقیاس پذیری خیلی بالا
 
-</div>
-
 # زیرساخت و کارایی
 
 ## Cache Memory
@@ -1961,3 +1962,152 @@ public enum Singleton {
   - همیشه برای داده‌های موقتی، Expiration Time تعیین کنید.
   - برای داده‌های حساس، زمان انقضا کوتاه باشد تا امنیت افزایش پیدا کند.
   - استفاده از Cache به‌معنی حذف کامل دسترسی به منبع اصلی نیست؛ بلکه یک لایه بهینه‌سازی است.
+
+# الگوهای طراحی
+
+## الگوهای آفرینشی یا Creational
+
+### الگوی Singleton
+
+- تعریف: یک کلاس فقط یک نمونه در کل برنامه داشته باشد و یک نقطه دسترسی سراسری و کنترل‌شده به آن ارائه کند.
+
+- مسئله‌ای که حل می‌کند: جلوگیری از ساخت چند نمونه از منبعی که باید یکتا باشد؛ مثل رجیستری پیکربندی، لاگر مرکزی، اتصال اشتراکی به منبعی محدود.
+
+- ایده: پنهان کردن سازنده، نگه‌داشتن یک مرجع استاتیک به نمونه، و برگرداندن همان مرجع از طریق یک متد دسترسی کنترل‌شده.
+
+- زمان استفاده: وقتی واقعاً باید تنها یک نمونه وجود داشته باشد و داشتن چند نمونه باعث ناسازگاری یا هدررفت منابع می‌شود.
+
+- زمان عدم استفاده: وقتی یکتایی صرفاً باعث ایجاد وابستگی‌های سراسری، سخت شدن تست و کاهش قابلیت توسعه می‌شود؛ در این شرایط ترجیح با تزریق وابستگی و مدیریت چرخه حیات توسط کانتینر DI است.
+
+- نکات کلیدی در جاوا:
+
+  - در محیط چندنخی باید از شرایط رقابتی جلوگیری شود.
+
+  - اگر سریال‌سازی لازم است باید تضمین شود بعد از deserialization همچنان یک نمونه باقی می‌ماند.
+
+  - در برابر reflection باید مراقبت شود؛ بهترین راهکار استفاده از enum است.
+
+  - Singletonهای قابل تغییر ریسک وضعیت مشترک و باگ‌های همزمانی را بالا می‌برند؛ تا حد امکان آن‌ها را immutable یا با حداقل وضعیت بسازید.
+
+- پیاده‌سازی eager (ساده و thread-safe، بدون تنبلی): نمونه در زمان بارگذاری کلاس ساخته می‌شود؛ برای اشیائی که ساختشان ارزان و همیشه لازم است مناسب است.
+
+<div dir="ltr">
+
+```
+
+public class Logger {
+
+    private static final Logger INSTANCE = new Logger();
+
+    private Logger() {}
+
+    public static Logger getInstance() { return INSTANCE; }
+
+}
+
+```
+
+</div>
+
+- پیاده‌سازی lazy با synchronized روی کل متد: ساده و ایمن در چندنخی، اما هر فراخوانی قفل می‌گیرد و می‌تواند گلوگاه کارایی شود.
+
+<div dir="ltr">
+
+```
+
+public class Logger {
+
+    private static Logger instance;
+
+    private Logger() {}
+
+    public static synchronized Logger getInstance() {
+
+        if (instance == null) instance = new Logger();
+
+        return instance;
+
+    }
+
+}
+
+```
+
+</div>
+
+- Double-Checked Locking با volatile: قفل فقط در بار اول گرفته می‌شود؛ volatile برای جلوگیری از reorder و مشکلات visibility ضروری است.
+
+<div dir="ltr">
+
+```
+
+public class Logger {
+
+    private static volatile Logger instance;
+
+    private Logger() {}
+
+    public static Logger getInstance() {
+
+        if (instance == null) {
+
+            synchronized (Logger.class) {
+
+                if (instance == null) instance = new Logger();
+
+            }
+
+        }
+
+        return instance;
+
+    }
+
+}
+
+```
+
+</div>
+
+- Initialization-on-Demand Holder (توصیه‌شده برای lazy): تنبلی واقعی، بدون قفل در مسیر داغ، ایمن در چندنخی با تکیه بر بارگذاری تنبل کلاس‌های داخلی توسط JVM.
+
+<div dir="ltr">
+
+```
+public class Logger {
+
+    private Logger() {}
+
+    private static class Holder {
+
+        static final Logger INSTANCE = new Logger();
+
+    }
+
+    public static Logger getInstance() { return Holder.INSTANCE; }
+
+}
+
+```
+
+</div>
+
+- Enum Singleton (ایمن‌ترین در برابر serialization و reflection): JVM تضمین می‌کند یک نمونه یکتا وجود دارد؛ deserialization همان نمونه را برمی‌گرداند و ساخت از طریق reflection مجاز نیست.
+
+<div dir="ltr">
+
+```
+
+public enum Logger {
+
+    INSTANCE;
+
+    public void log(String msg) { System.out.println(msg); }
+
+}
+
+```
+
+</div>
+
+</div>
