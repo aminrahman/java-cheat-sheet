@@ -2,77 +2,42 @@
 
 # فهرست مطالب
 
-[مبانی نرم افزار و طراحی](#مبانی-نرم-افزار-و-طراحی)
-  
-  [اصول طراحی در مهندسی نرم افزار](#اصول-طراحی-در-مهندسی-نرم-افزار)
-  
-  [اصول طراحی سامانه مقیاس پذیر](#اصول-طراحی-سامانه-مقیاس-پذیر)
-  
-  [انواع مدیریت پروژه های نرم افزاری](#انواع-مدیریت-پروژه-های-نرم-افزاری)
-  
-  [Scrum](#scrum)
-
-[ابزارهای توسعه و مدیریت پروژه](#ابزارهای-توسعه-و-مدیریت-پروژه)
-  
-  [Git](#git)
-  
-  [ابزارهای ساخت یا Build پروژه](#ابزارهای-ساخت-یا-build-پروژه)
-  
-  [CI/CD](#cicd)
-  
-  [Docker](#docker)
-  
-  [Cloud](#cloud)
-  
-  [ابزارهای پایش](#ابزارهای-پایش)
-
-[پایگاه داده و ORM](#پایگاه-داده-و-orm)
-  
-  [ORM or Object Relational Mapping](#orm-or-object-relational-mapping)
-  
-  [ایندکس در پایگاه داده](#ایندکس-در-پایگاه-داده)
-
-[معماری سامانه ها](#معماری-سامانه-ها)
-  
-  [معماری پیامرسانی یا Messaging](#معماری-پیامرسانی-یا-messaging)
-  
-  [ReST vs. SOAP](#rest-vs-soap)
-  
-  [احراز هویت و تعیین سطح دسترسی](#احراز-هویت-و-تعیین-سطح-دسترسی)
-
-[تست و تضمین کیفیت](#تست-و-تضمین-کیفیت)
-  
-  [انواع تست](#انواع-تست)
-
-[مبانی جاوا و مفاهیم کلیدی](#مبانی-جاوا-و-مفاهیم-کلیدی)
-  
-  [Data Structure in Java](#data-structure-in-java)
-  
-  [Search and Sort Algorithms](#search-and-sort-algorithms)
-  
-  [Collection vs. Collections in java.util](#collection-vs-collections-in-javautil)
-  
-  [Instance Variable vs. Static Variable](#instance-variable-vs-static-variable)
-  
-  [== vs. equals in Java](#-vs-equals-in-java)
-  
-  [hashCode besides equals](#hashcode-besides-equals)
-  
-  [Reflection](#reflection)
-
-[مباحث پیشرفته در جاوا](#مباحث-پیشرفته-در-جاوا)
-  
-  [Thread and Synchronized](#thread-and-synchronized)
-  
-  [Singleton problem in Multi-thread environment](#singleton-problem-in-multi-thread-environment)
-  
-  [Serialization in distributed environment](#serialization-in-distributed-environment)
-  
-  [Techniques for Resource Management and Concurrency in Java](#techniques-for-resource-management-and-concurrency-in-java)
-
-[زیرساخت و کارایی](#زیرساخت-و-کارایی)
-  
-  [Cache Memory](#cache-memory)
+- [مبانی نرم افزار و طراحی](#مبانی-نرم-افزار-و-طراحی)
+  - [اصول طراحی در مهندسی نرم افزار](#اصول-طراحی-در-مهندسی-نرم-افزار)
+  - [اصول طراحی سامانه مقیاس پذیر](#اصول-طراحی-سامانه-مقیاس-پذیر)
+  - [انواع مدیریت پروژه های نرم افزاری](#انواع-مدیریت-پروژه-های-نرم-افزاری)
+  - [اسکرام](#scrum)
+- [ابزارهای توسعه و مدیریت پروژه](#ابزارهای-توسعه-و-مدیریت-پروژه)
+  - [گیت](#git)
+  - [ابزارهای ساخت یا Build پروژه](#ابزارهای-ساخت-یا-build-پروژه)
+  - [توسعه و تحویل مداوم یا CI/CD](#cicd)
+  - [داکر](#docker)
+  - [کلود](#cloud)
+  - [ابزارهای پایش](#ابزارهای-پایش)
+- [پایگاه داده و ORM](#پایگاه-داده-و-orm)
+  - [ابزار ORM](#orm-or-object-relational-mapping)
+  - [ایندکس در پایگاه داده](#ایندکس-در-پایگاه-داده)
+- [معماری سامانه ها](#معماری-سامانه-ها)
+  - [معماری پیامرسانی یا Messaging](#معماری-پیامرسانی-یا-messaging)
+  - [مقایسه ReST و SOAP](#rest-vs-soap)
+  - [احراز هویت و تعیین سطح دسترسی](#احراز-هویت-و-تعیین-سطح-دسترسی)
+- [تست و تضمین کیفیت](#تست-و-تضمین-کیفیت)
+  - [انواع تست](#انواع-تست)
+- [مبانی جاوا و مفاهیم کلیدی](#مبانی-جاوا-و-مفاهیم-کلیدی)
+  - [ساختارهای داده در جاوا](#data-structure-in-java)
+  - [انواع الگوریتم های جستجو و مرتب سازی](#search-and-sort-algorithms)
+  - [مقایسه بین Collection vs. Collections در java.util](#collection-vs-collections-in-javautil)
+  - [مقایسه Instance Variable vs. Static Variable](#instance-variable-vs-static-variable)
+  - [مقایسه == vs. equals in Java](#-vs-equals-in-java)
+  - [قرارگیری hashCode besides equals](#hashcode-besides-equals)
+  - [رفلکشن](#reflection)
+- [مباحث پیشرفته در جاوا](#مباحث-پیشرفته-در-جاوا)
+  - [مبانی Thread and Synchronized](#thread-and-synchronized)
+  - [مشکل Singleton در محیط Multi-thread](#singleton-problem-in-multi-thread-environment)
+  - [مبانی Serialization در محیط توزیع شده](#serialization-in-distributed-environment)
+  - [تکنیک های مدیریت منابع و Concurrency در جاوا](#techniques-for-resource-management-and-concurrency-in-java)
+- [زیرساخت و کارایی](#زیرساخت-و-کارایی)
+  - [حافظه کش](#cache-memory)
 
 # مبانی نرم افزار و طراحی
 
